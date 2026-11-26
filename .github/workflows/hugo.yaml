@@ -1,0 +1,75 @@
+
+name: Build and Deploy Hugo Blog
+
+# 실행 조건
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# 실행 환경 변수
+env:
+  HUGO_VERSION: 0.170.1
+  TZ: Asia/Seoul
+
+# GitHub Actions 권한
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 동시 배포 제어
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+
+  # CI: 블로그 빌드
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install Hugo
+        run: |
+          curl -fL -o hugo.tar.gz "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_linux-amd64.tar.gz"
+          mkdir -p "$HOME/.local/bin"
+          tar -xzf hugo.tar.gz -C "$HOME/.local/bin" hugo
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Check Hugo Version
+        run: hugo version
+
+      - name: Setup GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Build Hugo Site
+        run: |
+          hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./public
+
+  # CD: GitHub Pages 배포
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
