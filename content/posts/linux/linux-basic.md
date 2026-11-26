@@ -1,7 +1,6 @@
 
 ---
 title: "Linux 기초"
-date: {{ .Date }}
 draft: false
 categories: ["Linux"]
 tags: ["Linux"]

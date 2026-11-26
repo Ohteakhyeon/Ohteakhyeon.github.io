@@ -1,3 +1,8 @@
+enableGitInfo = true
+timeZone = "Asia/Seoul"
+
+[frontmatter]
+  date = ["date", ":git"]
 
 # 기본 사이트 설정
 baseURL = "https://ohteakhyeon.github.io/"
