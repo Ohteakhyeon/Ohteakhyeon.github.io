@@ -1,0 +1,71 @@
+
+# 기본 사이트 설정
+baseURL = "https://ohteakhyeon.github.io/"
+languageCode = "ko-kr"
+defaultContentLanguage = "ko"
+title = "Infrastructure Engineering Blog"
+theme = "PaperMod"
+
+# 카테고리 및 태그 설정
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+# 출력 형식 설정
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# PaperMod 테마 설정
+[params]
+  env = "production"
+  description = "시스템 및 인프라 엔지니어 기술 블로그"
+  defaultTheme = "auto"
+  disableThemeToggle = false
+  ShowReadingTime = true
+  ShowCodeCopyButtons = true
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = true
+  ShowToc = true
+  TocOpen = false
+  mainSections = ["posts"]
+
+# 메인 화면 소개
+[params.homeInfoParams]
+  Title = "Infrastructure Engineering Blog"
+  Content = "Linux, Network, Cloud, Kubernetes, Infrastructure Automation 학습 및 기술 기록"
+
+# GitHub 프로필 연결
+[[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/Ohteakhyeon"
+
+# 상단 메뉴 설정
+[[menu.main]]
+  identifier = "posts"
+  name = "Posts"
+  url = "/posts/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "categories"
+  name = "Categories"
+  url = "/categories/"
+  weight = 20
+
+[[menu.main]]
+  identifier = "tags"
+  name = "Tags"
+  url = "/tags/"
+  weight = 30
+
+[[menu.main]]
+  identifier = "search"
+  name = "Search"
+  url = "/search/"
+  weight = 40
+
+[[menu.main]]
+  identifier = "about"
+  name = "About"
+  url = "/about/"
+  weight = 50
